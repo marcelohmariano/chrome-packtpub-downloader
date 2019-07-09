@@ -1,0 +1,55 @@
+{
+  "manifest_version": 2,
+  "name": "Packtpub Downloader",
+  "version": "1.0.0",
+  "description": "A Google Chrome extension to download Packtpub ebooks",
+  "author": "Marcelo Mariano",
+
+  "background": {
+    "scripts": [
+      "src/common/messages.js",
+      "src/background/account_service.js",
+      "src/background/page_content_runner.js",
+      "src/background/extension_service.js",
+      "src/background/main.js"
+    ],
+    "persistent": false
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["*://*.packtpub.com/*"],
+      "js": [
+        "src/common/messages.js",
+        "src/content/product_list_controller.js",
+        "src/content/product_list_view.js",
+        "src/content/page_content_service.js",
+        "src/content/main.js"
+      ]
+    }
+  ],
+
+  "page_action": {
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "24": "icons/icon24.png",
+      "32": "icons/icon32.png",
+      "48": "icons/icon48.png"
+    }
+  },
+
+  "icons": {
+    "16": "icons/icon16.png",
+    "24": "icons/icon24.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png"
+  },
+
+  "permissions": [
+    "cookies",
+    "declarativeContent",
+    "downloads",
+    "tabs",
+    "*://*.packtpub.com/*"
+  ]
+}
