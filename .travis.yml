@@ -1,0 +1,20 @@
+language: minimal
+
+services:
+  - docker
+
+git:
+  depth: 1
+
+install:
+  - make devenv
+
+script:
+  - make
+
+deploy:
+  - provider: script
+    script: make deploy GITHUB_REPO_TAG="$TRAVIS_TAG"
+    skip_cleanup: true
+    on:
+      tags: true

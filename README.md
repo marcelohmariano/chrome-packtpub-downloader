@@ -1,6 +1,7 @@
 # Chrome Packtpub Downloader
 
 [![GitHub](https://img.shields.io/github/license/MarceloHMariano/chrome-packtpub-downloader.svg)](LICENSE)
+[![Travis (.com)](https://img.shields.io/travis/com/MarceloHMariano/chrome-packtpub-downloader.svg)](https://travis-ci.com/MarceloHMariano/chrome-packtpub-downloader/builds)
 
 A Google Chrome extension that allows you to download the books from your Packtpub account.
 
