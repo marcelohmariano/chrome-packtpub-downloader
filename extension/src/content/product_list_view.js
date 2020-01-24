@@ -5,21 +5,30 @@ let ProductListView = function(productListController) {
   let kDownloadButtonProductIdAttribute = 'data-product-id';
   let kDownloadButtonFileTypeAttribute = 'data-product-filetype';
 
-  let addDownloadLink = function(parentNode, type, productId) {
-    let button = document.createElement('button');
-    let i = document.createElement('i');
+  let findDisabledDownloadButton = function(downloadsContainer, fileType) {
+    let selector = 'button.download-btn.download-disabled.tooltip-disabled-downloads.ng-star-inserted';
+    let buttons = downloadsContainer.querySelectorAll(selector);
 
-    i.setAttribute('class', 'fa fa-download');
+    for (let button of buttons) {
+      let buttonText = button.innerText.toLowerCase().trim();
+      if (buttonText === fileType)
+        return button;
+    }
 
-    button.setAttribute('class', 'download ng-star-inserted');
+    return null;
+  }
+
+  let enableDownloadLink = function(downloadsContainer, fileType, productId) {
+    let button = findDisabledDownloadButton(downloadsContainer, fileType);
+    let bottonDownloadTip = button.querySelector('div.bottom.downloadTooltip');
+
+    button.removeChild(bottonDownloadTip);
+
+    button.setAttribute('class', 'download-btn ng-star-inserted');
     button.setAttribute(kDownloadButtonProductIdAttribute, productId);
-    button.setAttribute(kDownloadButtonFileTypeAttribute, type);
+    button.setAttribute(kDownloadButtonFileTypeAttribute, fileType);
 
-    button.appendChild(i);
-    button.appendChild(document.createTextNode('\n' + type + '\n'));
     button.onclick = downloadButtonClickHandler.bind(button);
-
-    parentNode.appendChild(button);
   };
 
   let downloadButtonClickHandler = function() {
@@ -29,29 +38,19 @@ let ProductListView = function(productListController) {
     productListController.download(productId, fileType);
   };
 
-  let hasDownloadLink = function(downloadsContainer, fileType) {
-    let buttons = downloadsContainer.querySelectorAll('button.download.ng-star-inserted');
-
-    if (buttons.length > 0) {
-      for (let i = 0; i < buttons.length; i++) {
-        let buttonText = buttons[i].innerText.toLowerCase().trim();
-        if (buttonText === fileType)
-          return true;
-      }
-    }
-
-    return false;
+  let isDownloadLinkEnabled = function(downloadsContainer, fileType) {
+    return findDisabledDownloadButton(downloadsContainer, fileType) === null;
   };
 
-  let addDownloadLinks = function(downloadsContainer, productId) {
-    if (!hasDownloadLink(downloadsContainer, 'epub'))
-      addDownloadLink(downloadsContainer, 'epub', productId);
+  let enableDownloadLinks = function(downloadsContainer, productId) {
+    if (!isDownloadLinkEnabled(downloadsContainer, 'epub'))
+      enableDownloadLink(downloadsContainer, 'epub', productId);
 
-    if (!hasDownloadLink(downloadsContainer, 'mobi'))
-      addDownloadLink(downloadsContainer, 'mobi', productId);
+    if (!isDownloadLinkEnabled(downloadsContainer, 'mobi'))
+      enableDownloadLink(downloadsContainer, 'mobi', productId);
 
-    if (!hasDownloadLink(downloadsContainer, 'pdf'))
-      addDownloadLink(downloadsContainer, 'pdf', productId);
+    if (!isDownloadLinkEnabled(downloadsContainer, 'pdf'))
+      enableDownloadLink(downloadsContainer, 'pdf', productId);
   };
 
   let findAllReaderLinks = function() {
@@ -71,7 +70,7 @@ let ProductListView = function(productListController) {
   };
 
   return {
-    addBookDownloadLinks: function() {
+    enableBookDownloadLinks: function() {
       let readerLinks = findAllReaderLinks();
 
       readerLinks.forEach(function(link) {
@@ -79,7 +78,7 @@ let ProductListView = function(productListController) {
           let downloadsContainer = findDownloadsContainer(link);
           let productId = getProductId(link);
 
-          addDownloadLinks(downloadsContainer, productId);
+          enableDownloadLinks(downloadsContainer, productId);
         }
       });
     }
