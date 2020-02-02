@@ -7,7 +7,7 @@ let PageContentRunner = function(accountService) {
 
   let tabTimers = new Map();
 
-  let enableBookDownloadLinks = function(tabId) {
+  let enableDownloadLinks = function(tabId) {
     accountService.getUserToken(function(token) {
       chrome.tabs.sendMessage(tabId, {
         id: kAddDownloadLinksMessageId,
@@ -25,7 +25,7 @@ let PageContentRunner = function(accountService) {
       return;
 
     let timer = setInterval(function() {
-      enableBookDownloadLinks(tabId);
+      enableDownloadLinks(tabId);
     }.bind(tabId), kIntervalMs);
 
     tabTimers.set(tabId, timer);

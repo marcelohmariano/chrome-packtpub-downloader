@@ -19,7 +19,7 @@ let ExtensionService = function(pageContentRunner) {
     });
   };
 
-  let enableBookDownloadLinksAutomatically = function() {
+  let enableDownloadLinksAutomatically = function() {
     chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
       pageContentRunner.startPageContentServiceForTab(tab);
     });
@@ -29,7 +29,7 @@ let ExtensionService = function(pageContentRunner) {
     });
   };
 
-  let downloadBookWhenLinkIsClicked = function() {
+  let downloadFileWhenLinkIsClicked = function() {
     chrome.runtime.onMessage.addListener(function(message) {
       if (message.id && message.id === kDownloadFileMessageId)
         chrome.downloads.download({url: message.data.url});
@@ -39,8 +39,8 @@ let ExtensionService = function(pageContentRunner) {
   return {
     start: function() {
       showExtensionToolbarButtonAutomatically();
-      enableBookDownloadLinksAutomatically();
-      downloadBookWhenLinkIsClicked();
+      enableDownloadLinksAutomatically();
+      downloadFileWhenLinkIsClicked();
     }
   };
 
