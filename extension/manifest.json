@@ -8,8 +8,9 @@
   "background": {
     "scripts": [
       "src/common/messages.js",
-      "src/background/account_service.js",
-      "src/background/page_content_runner.js",
+      "src/background/user_account_service.js",
+      "src/background/page_content_runner_rules.js",
+      "src/background/page_content_runner_service.js",
       "src/background/extension_service.js",
       "src/background/main.js"
     ],
@@ -21,8 +22,8 @@
       "matches": ["*://*.packtpub.com/*"],
       "js": [
         "src/common/messages.js",
-        "src/content/product_list_controller.js",
-        "src/content/product_list_view.js",
+        "src/content/product_download_service.js",
+        "src/content/my_owned_products_controller.js",
         "src/content/page_content_service.js",
         "src/content/main.js"
       ]

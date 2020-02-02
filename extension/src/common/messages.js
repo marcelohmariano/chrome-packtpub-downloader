@@ -1,4 +1,4 @@
 // messages.js
 
-let kAddDownloadLinksMessageId = 'ADD_DOWNLOAD_LINKS';
-let kDownloadFileMessageId = 'DOWNLOAD_FILE';
+let MSG_ENABLE_MY_OWNED_PRODUCTS_DOWNLOAD_LINKS = 'ADD_DOWNLOAD_LINKS';
+let MSG_START_PRODUCT_DOWNLOAD = 'DOWNLOAD_FILE';

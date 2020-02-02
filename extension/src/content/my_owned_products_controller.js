@@ -1,11 +1,11 @@
-// product_list_view.js
+// my_owned_products_controller.js
 
-let ProductListView = function(productListController) {
+let MyOwnedProductsController = function (productDownloadService) {
 
-  let kDownloadButtonProductIdAttribute = 'data-product-id';
-  let kDownloadButtonFileTypeAttribute = 'data-product-filetype';
+  let DATA_PRODUCT_ID_ATTRIBUTE = 'data-product-id';
+  let DATA_PRODUCT_FILETYPE_ATTRIBUTE = 'data-product-filetype';
 
-  let findDisabledDownloadButton = function(downloadsContainer, fileType) {
+  let findDisabledDownloadButton = function (downloadsContainer, fileType) {
     let selector = 'button.download-btn.download-disabled.tooltip-disabled-downloads.ng-star-inserted';
     let buttons = downloadsContainer.querySelectorAll(selector);
 
@@ -16,9 +16,9 @@ let ProductListView = function(productListController) {
     }
 
     return null;
-  }
+  };
 
-  let enableDownloadLink = function(downloadsContainer, fileType, productId) {
+  let enableDownloadLink = function (downloadsContainer, fileType, productId) {
     let button = findDisabledDownloadButton(downloadsContainer, fileType);
 
     if (!button)
@@ -28,36 +28,36 @@ let ProductListView = function(productListController) {
 
     button.removeChild(bottonDownloadTip);
     button.setAttribute('class', 'download-btn ng-star-inserted');
-    button.setAttribute(kDownloadButtonProductIdAttribute, productId);
-    button.setAttribute(kDownloadButtonFileTypeAttribute, fileType);
+    button.setAttribute(DATA_PRODUCT_ID_ATTRIBUTE, productId);
+    button.setAttribute(DATA_PRODUCT_FILETYPE_ATTRIBUTE, fileType);
 
     button.onclick = downloadButtonClickHandler.bind(button);
   };
 
-  let downloadButtonClickHandler = function() {
-    let productId = this.getAttribute(kDownloadButtonProductIdAttribute);
-    let fileType = this.getAttribute(kDownloadButtonFileTypeAttribute);
+  let downloadButtonClickHandler = function () {
+    let productId = this.getAttribute(DATA_PRODUCT_ID_ATTRIBUTE);
+    let fileType = this.getAttribute(DATA_PRODUCT_FILETYPE_ATTRIBUTE);
 
-    productListController.download(productId, fileType);
+    productDownloadService.download(productId, fileType);
   };
 
-  let findAllReaderLinks = function() {
+  let findAllReaderLinks = function () {
     return document.querySelectorAll('.reader-link.ng-star-inserted');
   };
 
-  let findDownloadsContainer = function(link) {
+  let findDownloadsContainer = function (link) {
     return link.parentNode.querySelector('div.downloads-container');
   };
 
-  let getProductId = function(link) {
+  let getProductId = function (link) {
     return link.href.substring(link.href.lastIndexOf('/') + 1);
   };
 
   return {
-    enableDownloadLinks: function() {
+    enableDownloadLinks: function () {
       let readerLinks = findAllReaderLinks();
 
-      readerLinks.forEach(function(link) {
+      readerLinks.forEach(function (link) {
         let downloadsContainer = findDownloadsContainer(link);
         let productId = getProductId(link);
 
