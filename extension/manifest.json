@@ -24,6 +24,7 @@
         "src/common/messages.js",
         "src/content/product_download_service.js",
         "src/content/my_owned_products_controller.js",
+        "src/content/book_reader_controller.js",
         "src/content/page_content_service.js",
         "src/content/main.js"
       ]
