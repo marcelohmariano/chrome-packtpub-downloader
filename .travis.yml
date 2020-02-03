@@ -1,10 +1,14 @@
 language: minimal
 
-services:
-  - docker
+branches:
+  only:
+    - master
 
 git:
   depth: 1
+  
+services:
+  - docker
 
 install:
   - make devenv
